@@ -1,0 +1,68 @@
+<h1>Lançamento de Tarefas</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      
+      <button (click)="novaTask()"
+        class="btn btn-success">Nova
+      </button>
+
+      <div [style.display] = "isPersistindo() == true ? 'block' : 'none'">
+        <hr />
+        
+        <!-- Formulário para criação e edição de task -->
+        <form (ngSubmit)="salvarTask()">
+          <div class="form-group">
+            <label class="control-label" for="titulo">Título</label>
+            <input type="text" class="form-control" name="titulo" 
+              id="titulo" [(ngModel)]="task.titulo" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="descricao">Descrição</label>
+            <input type="text" class="form-control" name="descricao" 
+              id="descricao" [(ngModel)]="task.descricao" />
+          </div>
+          
+          <hr />
+          <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+
+        
+      </div>
+
+      <table class="table table-striped table-hover">   
+        <thead>
+            <tr>
+              <th>ID</th>
+              <th>Título</th>
+              <th>Status</th>
+              <th>Descrição</th>
+              <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>  
+           <tr *ngFor = "let t of tasks">
+            <td>{{t.id}}</td>
+            <td>{{t.titulo}}</td>
+            <td>{{t.status}}</td>
+            <td>{{t.descricao}}</td>
+            <td>
+                <button (click)="editTask(t)" [disabled]="t.status == 'Concluída'"
+                  class="btn btn-info">Editar
+                </button>
+                <button (click)="concluirTask(t)"
+                  class="btn btn-success">{{ t.status == 'Concluída' ? 'Reabrir' : 'Concluir' }}
+                </button>
+                <button (click)="deleteTask(t)" [disabled]="t.status == 'Removida'"
+                  class="btn btn-danger">Deletar
+                </button>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+    </div>
+  </div>
+</div>
